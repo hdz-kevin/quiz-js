@@ -5,30 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz - Revolución 3</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    animation: {
-                        'bounce-subtle': 'bounce 0.6s ease-in-out',
-                        'shake': 'shake 0.6s ease-in-out',
-                        'slide-in': 'slideIn 0.5s ease-out'
-                    },
-                    keyframes: {
-                        shake: {
-                            '0%, 100%': { transform: 'translateX(0)' },
-                            '25%': { transform: 'translateX(-5px)' },
-                            '75%': { transform: 'translateX(5px)' }
-                        },
-                        slideIn: {
-                            '0%': { opacity: '0', transform: 'translateY(20px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' }
-                        }
-                    }
-                }
-            }
-        }
-    </script>
 </head>
 <body class="bg-gray-50 min-h-screen flex items-center justify-center p-5 font-sans">
     <div class="w-full max-w-2xl bg-white rounded-2xl shadow-lg border border-gray-200 p-10">
@@ -40,16 +16,16 @@
         </div>
 
         <div class="mb-10">
+            <!-- Pregunta -->
             <div class="text-xl font-semibold text-gray-800 text-center leading-relaxed p-5 bg-gray-50 rounded-xl border-l-4 border-blue-500 mb-8" id="questionText">
-                <!-- La pregunta se mostrará aquí -->
             </div>
 
+            <!-- Opciones -->
             <div class="space-y-3 mb-8" id="optionsContainer">
-                <!-- Las opciones se generarán dinámicamente aquí -->
             </div>
 
-            <div class="hidden bg-green-100 border-l-4 border-green-500 text-green-700 p-5 rounded-xl text-center font-semibold animate-slide-in" id="answerRevealed">
-                <!-- La respuesta correcta se mostrará aquí -->
+            <!-- Respuesta correcta -->
+            <div class="hidden bg-green-100 border-l-4 border-green-500 text-green-700 p-5 rounded-xl text-center font-semibold" id="answerRevealed">
             </div>
         </div>
 
@@ -64,7 +40,8 @@
                 Siguiente →
             </button>
         </div>
-    </div>    <script>
+    </div>
+    <script>
         class Question {
             constructor(text, choices, answer) {
                 this.text = text;
@@ -73,7 +50,6 @@
             }
         }
 
-        // Preguntas sobre el nacimiento y avance del internet
         const questions = [
             new Question(
                 '¿En qué año se creó ARPANET?',
@@ -231,7 +207,7 @@
             // Resaltar respuesta correcta
             Array.from(options).forEach(option => {
                 if (option.dataset.value === question.answer) {
-                    option.className = 'w-full text-left p-4 border-2 border-green-500 rounded-xl bg-green-100 text-green-800 font-semibold animate-bounce-subtle';
+                    option.className = 'w-full text-left p-4 border-2 border-green-500 rounded-xl bg-green-100 text-green-800 font-semibold';
                 }
             });
 
