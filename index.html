@@ -4,57 +4,325 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz - Revolución 3</title>
-</head>
-<body>
-
-
+    <script src="https://cdn.tailwindcss.com"></script>
     <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    animation: {
+                        'bounce-subtle': 'bounce 0.6s ease-in-out',
+                        'shake': 'shake 0.6s ease-in-out',
+                        'slide-in': 'slideIn 0.5s ease-out'
+                    },
+                    keyframes: {
+                        shake: {
+                            '0%, 100%': { transform: 'translateX(0)' },
+                            '25%': { transform: 'translateX(-5px)' },
+                            '75%': { transform: 'translateX(5px)' }
+                        },
+                        slideIn: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 min-h-screen flex items-center justify-center p-5 font-sans">
+    <div class="w-full max-w-2xl bg-white rounded-2xl shadow-lg border border-gray-200 p-10">
+        <div class="text-center mb-10">
+            <h1 class="text-3xl font-bold text-gray-800 mb-3 tracking-tight">Quiz de Preguntas</h1>
+            <div class="inline-block bg-gray-100 text-gray-600 px-4 py-2 rounded-full text-sm font-medium border border-gray-200">
+                Pregunta <span id="currentQuestion">1</span> de <span id="totalQuestions">10</span>
+            </div>
+        </div>
+
+        <div class="mb-10">
+            <div class="text-xl font-semibold text-gray-800 text-center leading-relaxed p-5 bg-gray-50 rounded-xl border-l-4 border-blue-500 mb-8" id="questionText">
+                <!-- La pregunta se mostrará aquí -->
+            </div>
+
+            <div class="space-y-3 mb-8" id="optionsContainer">
+                <!-- Las opciones se generarán dinámicamente aquí -->
+            </div>
+
+            <div class="hidden bg-green-100 border-l-4 border-green-500 text-green-700 p-5 rounded-xl text-center font-semibold animate-slide-in" id="answerRevealed">
+                <!-- La respuesta correcta se mostrará aquí -->
+            </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <button class="w-full sm:w-auto min-w-32 bg-gray-500 hover:bg-gray-600 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none disabled:shadow-none" id="prevBtn">
+                ← Anterior
+            </button>
+            <button class="w-full sm:w-auto min-w-40 bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-7 rounded-xl transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg" id="showAnswerBtn">
+                Mostrar Respuesta
+            </button>
+            <button class="w-full sm:w-auto min-w-32 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none disabled:shadow-none" id="nextBtn">
+                Siguiente →
+            </button>
+        </div>
+    </div>    <script>
         class Question {
-            /**
-             * @param {string} text - The text of the question.
-             * @param {{ option: string, text: string }} choices - The possible answer choices.
-             * @param {string} answer - The correct answer.
-             */
             constructor(text, choices, answer) {
                 this.text = text;
                 this.choices = choices;
                 this.answer = answer;
             }
-
-
         }
 
-        const q1 = new Question(
-            'What is the capital of France?',
-            {
-                'a': 'Berlin',
-                'b': 'Madrid',
-                'c': 'Paris'
-            },
-            'c'
-        );
+        // Preguntas sobre el nacimiento y avance del internet
+        const questions = [
+            new Question(
+                '¿En qué año se creó ARPANET?',
+                {
+                    'a': '1967',
+                    'b': '1969',
+                    'c': '1971'
+                },
+                'b'
+            ),
+            new Question(
+                '¿Cuáles fueron las cuatro universidades que se conectaron inicialmente a ARPANET?',
+                {
+                    'a': 'UCLA, Stanford, Universidad de Utah y Santa Bárbara',
+                    'b': 'MIT, Harvard, Princeton y Yale',
+                    'c': 'Berkeley, Caltech, Carnegie Mellon y Columbia'
+                },
+                'a'
+            ),
+            new Question(
+                '¿Qué intentaba decir el primer mensaje enviado entre UCLA y Stanford?',
+                {
+                    'a': 'hello',
+                    'b': 'login',
+                    'c': 'start'
+                },
+                'b'
+            ),
+            new Question(
+                '¿Quién envió el primer correo electrónico en 1971?',
+                {
+                    'a': 'Tim Berners-Lee',
+                    'b': 'Vinton Cerf',
+                    'c': 'Ray Tomlinson'
+                },
+                'c'
+            ),
+            new Question(
+                '¿En qué fecha ARPANET adoptó oficialmente los protocolos TCP/IP?',
+                {
+                    'a': '1 de enero de 1980',
+                    'b': '1 de enero de 1983',
+                    'c': '1 de enero de 1985'
+                },
+                'b'
+            ),
+            new Question(
+                '¿Quién creó la World Wide Web (WWW) en 1991?',
+                {
+                    'a': 'Tim Berners-Lee',
+                    'b': 'Robert Kahn',
+                    'c': 'Paul Baran'
+                },
+                'a'
+            ),
+            new Question(
+                '¿En qué institución trabajaba Tim Berners-Lee cuando creó la WWW?',
+                {
+                    'a': 'MIT',
+                    'b': 'CERN',
+                    'c': 'Stanford'
+                },
+                'b'
+            ),
+            new Question(
+                '¿Cuáles fueron los tres inventos clave de Tim Berners-Lee para la WWW?',
+                {
+                    'a': 'TCP/IP, DNS y HTTP',
+                    'b': 'HTML, HTTP y el primer navegador web',
+                    'c': 'FTP, SMTP y HTML'
+                },
+                'b'
+            ),
+            new Question(
+                '¿En qué año se lanzó Google?',
+                {
+                    'a': '1996',
+                    'b': '1998',
+                    'c': '2000'
+                },
+                'b'
+            ),
+            new Question(
+                '¿Qué caracterizaba principalmente a la Web 1.0?',
+                {
+                    'a': 'Los usuarios podían crear contenido e interactuar',
+                    'b': 'Era una web estática donde los usuarios solo podían leer información',
+                    'c': 'Incluía inteligencia artificial y redes sociales'
+                },
+                'b'
+            )
+        ];
 
-        const q2 = new Question(
-            'What is 2 + 2?',
-            {
-                'a': '3',
-                'b': '4',
-                'c': '5'
-            },
-            'b'
-        );
+        // Variables del estado del quiz
+        let currentQuestionIndex = 0;
+        let answerRevealed = false;
 
-        const q3 = new Question(
-            'What is the largest planet in our solar system?',
-            {
-                'a': 'Earth',
-                'b': 'Jupiter',
-                'c': 'Saturn'
-            },
-            'b'
-        );
+        const questionText = document.getElementById('questionText');
+        const optionsContainer = document.getElementById('optionsContainer');
+        const answerRevealedDiv = document.getElementById('answerRevealed');
+        const currentQuestionSpan = document.getElementById('currentQuestion');
+        const totalQuestionsSpan = document.getElementById('totalQuestions');
+        const showAnswerBtn = document.getElementById('showAnswerBtn');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
 
-        console.log([q1, q2, q3]);
+        function initQuiz() {
+            totalQuestionsSpan.textContent = questions.length;
+            loadQuestion();
+        }
+
+        // Cargar pregunta actual
+        function loadQuestion() {
+            const question = questions[currentQuestionIndex];
+
+            questionText.textContent = question.text;
+            // Actualizar contador
+            currentQuestionSpan.textContent = currentQuestionIndex + 1;
+
+            optionsContainer.innerHTML = '';
+
+            // Opciones
+            Object.entries(question.choices).forEach(([key, text]) => {
+                const option = document.createElement('div');
+                option.className = 'w-full text-left p-4 border-2 border-gray-200 rounded-xl bg-white font-medium text-gray-700 transition-all duration-300';
+                option.textContent = `${key.toUpperCase()}) ${text}`;
+                option.dataset.value = key;
+                optionsContainer.appendChild(option);
+            });
+
+            // Ocultar respuesta revelada
+            answerRevealedDiv.classList.add('hidden');
+            answerRevealed = false;
+
+            // Resetear botón de mostrar respuesta
+            showAnswerBtn.textContent = 'Mostrar Respuesta';
+            showAnswerBtn.className = 'w-full sm:w-auto min-w-40 bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-7 rounded-xl transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg';
+
+            // Actualizar estado de botones de navegación
+            updateNavigationButtons();
+        }
+
+        function toggleAnswer() {
+            if (!answerRevealed) {
+                showAnswer();
+            } else {
+                hideAnswer();
+            }
+        }
+
+        function showAnswer() {
+            const question = questions[currentQuestionIndex];
+            const options = optionsContainer.children;
+
+            // Resaltar respuesta correcta
+            Array.from(options).forEach(option => {
+                if (option.dataset.value === question.answer) {
+                    option.className = 'w-full text-left p-4 border-2 border-green-500 rounded-xl bg-green-100 text-green-800 font-semibold animate-bounce-subtle';
+                }
+            });
+
+            // Mostrar texto de respuesta
+            const correctText = question.choices[question.answer];
+            answerRevealedDiv.textContent = `✓ Respuesta correcta: ${question.answer.toUpperCase()}) ${correctText}`;
+            answerRevealedDiv.classList.remove('hidden');
+
+            // Cambiar botón
+            showAnswerBtn.textContent = 'Ocultar Respuesta';
+            showAnswerBtn.className = 'w-full sm:w-auto min-w-40 bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-7 rounded-xl transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg';
+
+            answerRevealed = true;
+        }
+
+        function hideAnswer() {
+            const options = optionsContainer.children;
+
+            // Resetear estilos de opciones
+            Array.from(options).forEach(option => {
+                option.className = 'w-full text-left p-4 border-2 border-gray-200 rounded-xl bg-white font-medium text-gray-700 transition-all duration-300';
+            });
+
+            // Ocultar texto de respuesta
+            answerRevealedDiv.classList.add('hidden');
+
+            // Resetear botón
+            showAnswerBtn.textContent = 'Mostrar Respuesta';
+            showAnswerBtn.className = 'w-full sm:w-auto min-w-40 bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-7 rounded-xl transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg';
+
+            answerRevealed = false;
+        }
+
+        function prevQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                loadQuestion();
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQuestionIndex < questions.length - 1) {
+                currentQuestionIndex++;
+                loadQuestion();
+            }
+        }
+
+        function updateNavigationButtons() {
+            // Botón anterior
+            if (currentQuestionIndex === 0) {
+                prevBtn.disabled = true;
+                prevBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            } else {
+                prevBtn.disabled = false;
+                prevBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            }
+
+            // Botón siguiente
+            if (currentQuestionIndex === questions.length - 1) {
+                nextBtn.disabled = true;
+                nextBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            } else {
+                nextBtn.disabled = false;
+                nextBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            }
+        }
+
+        // Event listeners
+        showAnswerBtn.addEventListener('click', toggleAnswer);
+        prevBtn.addEventListener('click', prevQuestion);
+        nextBtn.addEventListener('click', nextQuestion);
+
+        // Navegación con teclado
+        document.addEventListener('keydown', (e) => {
+            switch(e.key) {
+                case 'ArrowLeft':
+                    if (!prevBtn.disabled) prevQuestion();
+                    break;
+                case 'ArrowRight':
+                    if (!nextBtn.disabled) nextQuestion();
+                    break;
+                case ' ':
+                case 'Enter':
+                    e.preventDefault();
+                    toggleAnswer();
+                    break;
+            }
+        });
+
+        // Inicializar cuando el DOM esté listo
+        document.addEventListener('DOMContentLoaded', initQuiz);
     </script>
 </body>
 </html>
