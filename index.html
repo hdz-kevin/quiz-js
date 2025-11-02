@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz - Revolución 3</title>
+</head>
+<body>
+
+
+    <script>
+        class Question {
+            /**
+             * @param {string} text - The text of the question.
+             * @param {{ option: string, text: string }} choices - The possible answer choices.
+             * @param {string} answer - The correct answer.
+             */
+            constructor(text, choices, answer) {
+                this.text = text;
+                this.choices = choices;
+                this.answer = answer;
+            }
+
+
+        }
+
+        const q1 = new Question(
+            'What is the capital of France?',
+            {
+                'a': 'Berlin',
+                'b': 'Madrid',
+                'c': 'Paris'
+            },
+            'c'
+        );
+
+        const q2 = new Question(
+            'What is 2 + 2?',
+            {
+                'a': '3',
+                'b': '4',
+                'c': '5'
+            },
+            'b'
+        );
+
+        const q3 = new Question(
+            'What is the largest planet in our solar system?',
+            {
+                'a': 'Earth',
+                'b': 'Jupiter',
+                'c': 'Saturn'
+            },
+            'b'
+        );
+
+        console.log([q1, q2, q3]);
+    </script>
+</body>
+</html>
