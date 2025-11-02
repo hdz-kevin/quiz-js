@@ -23,10 +23,6 @@
             <!-- Opciones -->
             <div class="space-y-3 mb-8" id="optionsContainer">
             </div>
-
-            <!-- Respuesta correcta -->
-            <div class="hidden bg-green-100 text-green-700 p-5 rounded-xl text-center font-semibold" id="answerRevealed">
-            </div>
         </div>
 
         <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -149,7 +145,6 @@
 
         const questionText = document.getElementById('questionText');
         const optionsContainer = document.getElementById('optionsContainer');
-        const answerRevealedDiv = document.getElementById('answerRevealed');
         const currentQuestionSpan = document.getElementById('currentQuestion');
         const totalQuestionsSpan = document.getElementById('totalQuestions');
         const showAnswerBtn = document.getElementById('showAnswerBtn');
@@ -181,7 +176,6 @@
             });
 
             // Ocultar respuesta revelada
-            answerRevealedDiv.classList.add('hidden');
             answerRevealed = false;
 
             // Resetear botón de mostrar respuesta
@@ -211,11 +205,6 @@
                 }
             });
 
-            // Mostrar texto de respuesta
-            const correctText = question.choices[question.answer];
-            answerRevealedDiv.textContent = `✓ Respuesta correcta: ${question.answer.toUpperCase()}) ${correctText}`;
-            answerRevealedDiv.classList.remove('hidden');
-
             // Cambiar botón
             showAnswerBtn.textContent = 'Ocultar Respuesta';
             showAnswerBtn.className = 'w-full sm:w-auto min-w-40 bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-7 rounded-xl transition-all duration-300 hover:shadow-lg';
@@ -230,9 +219,6 @@
             Array.from(options).forEach(option => {
                 option.className = 'w-full text-left p-4 border-2 border-gray-200 rounded-xl bg-white font-medium text-gray-700 transition-all duration-300';
             });
-
-            // Ocultar texto de respuesta
-            answerRevealedDiv.classList.add('hidden');
 
             // Resetear botón
             showAnswerBtn.textContent = 'Mostrar Respuesta';
