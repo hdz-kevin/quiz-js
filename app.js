@@ -1,3 +1,15 @@
+const questionText = document.getElementById('questionText');
+const optionsContainer = document.getElementById('optionsContainer');
+const currentQuestionSpan = document.getElementById('currentQuestion');
+const totalQuestionsSpan = document.getElementById('totalQuestions');
+const showAnswerBtn = document.getElementById('showAnswerBtn');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+
+// Estado
+let currentQuestionIndex = 0;
+let answerRevealed = false;
+
 class Question {
     constructor(text, choices, answer) {
         this.text = text;
@@ -17,22 +29,40 @@ const questions = [
         'b'
     ),
     new Question(
-        '¿Cuáles fueron las cuatro universidades que se conectaron inicialmente a ARPANET?',
+        '¿En qué país se desarrolló ARPANET?',
         {
-            'a': 'UCLA, Stanford, Universidad de Utah y Santa Bárbara',
-            'b': 'MIT, Harvard, Princeton y Yale',
-            'c': 'Berkeley, Caltech, Carnegie Mellon y Columbia'
+            'a': 'Francia',
+            'b': 'Estados Unidos',
+            'c': 'Reino Unido',
+        },
+        'b'
+    ),
+    new Question(
+        '¿Por qué motivo Estados Unidos desarrolló ARPANET?',
+        {
+            'a': 'Para conectar computadoras entre sí y mantener la comunicación en caso de un ataque nuclear',
+            'b': 'Para espiar a otros países durante la Guerra Fría',
+            'c': 'Para desarrollar armamento avanzado de forma colaborativa',
         },
         'a'
     ),
     new Question(
-        '¿Qué intentaba decir el primer mensaje enviado entre UCLA y Stanford?',
+        '¿Cuál era la finalidad del primer mensaje enviado a travez de lo que hoy conocemos como  Internet?',
         {
-            'a': 'hello',
-            'b': 'login',
-            'c': 'start'
+            'a': 'Enviar un documento',
+            'b': 'Iniciar sesión remotamente',
+            'c': 'Enviar instrucciones'
         },
         'b'
+    ),
+    new Question(
+        '¿Qué intentaba decir el primer mensaje enviado?',
+        {
+            'a': 'start',
+            'b': 'hello',
+            'c': 'login',
+        },
+        'c'
     ),
     new Question(
         '¿Quién envió el primer correo electrónico en 1971?',
@@ -44,40 +74,31 @@ const questions = [
         'c'
     ),
     new Question(
-        '¿En qué fecha ARPANET adoptó oficialmente los protocolos TCP/IP?',
-        {
-            'a': '1 de enero de 1980',
-            'b': '1 de enero de 1983',
-            'c': '1 de enero de 1985'
-        },
-        'b'
-    ),
-    new Question(
         '¿Quién creó la World Wide Web (WWW) en 1991?',
         {
             'a': 'Tim Berners-Lee',
             'b': 'Robert Kahn',
             'c': 'Paul Baran'
         },
-        'a'
+        'a',
     ),
     new Question(
-        '¿En qué institución trabajaba Tim Berners-Lee cuando creó la WWW?',
+        '¿Cuál era el propósito original de la Web?',
         {
-            'a': 'MIT',
-            'b': 'CERN',
-            'c': 'Stanford'
+            'a': 'Desarrollar un sistema de comunicación seguro',
+            'b': 'Conectar computadoras entre sí',
+            'c': 'Compartir documentos científicos entre investigadores',
         },
-        'b'
+        'c',
     ),
     new Question(
-        '¿Cuáles fueron los tres inventos clave de Tim Berners-Lee para la WWW?',
+        '¿Cuáles fueron los tres inventos clave de Tim Berners-Lee para la Web?',
         {
             'a': 'TCP/IP, DNS y HTTP',
-            'b': 'HTML, HTTP y el primer navegador web',
-            'c': 'FTP, SMTP y HTML'
+            'b': 'FTP, SMTP y HTML',
+            'c': 'HTML, HTTP y el primer navegador web',
         },
-        'b'
+        'c'
     ),
     new Question(
         '¿En qué año se lanzó Google?',
@@ -89,27 +110,24 @@ const questions = [
         'b'
     ),
     new Question(
+        '¿A qué versión de la web pertenecen las redes sociales y los blogs?',
+        {
+            'a': 'Web 1.0',
+            'b': 'Web 2.0',
+            'c': 'Web 3.0'
+        },
+        'b',
+    ),
+    new Question(
         '¿Qué caracterizaba principalmente a la Web 1.0?',
         {
             'a': 'Los usuarios podían crear contenido e interactuar',
-            'b': 'Era una web estática donde los usuarios solo podían leer información',
-            'c': 'Incluía inteligencia artificial y redes sociales'
+            'b': 'Incluía inteligencia artificial y redes sociales',
+            'c': 'Era una web estática donde los usuarios solo podían leer información',
         },
-        'b'
-    )
+        'c',
+    ),
 ];
-
-// Variables del estado del quiz
-let currentQuestionIndex = 0;
-let answerRevealed = false;
-
-const questionText = document.getElementById('questionText');
-const optionsContainer = document.getElementById('optionsContainer');
-const currentQuestionSpan = document.getElementById('currentQuestion');
-const totalQuestionsSpan = document.getElementById('totalQuestions');
-const showAnswerBtn = document.getElementById('showAnswerBtn');
-const prevBtn = document.getElementById('prevBtn');
-const nextBtn = document.getElementById('nextBtn');
 
 function initQuiz() {
     totalQuestionsSpan.textContent = questions.length;
@@ -243,5 +261,4 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-// Inicializar cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', initQuiz);
