@@ -29,6 +29,15 @@ const questions = [
         'b'
     ),
     new Question(
+        '¿En qué año se descubrió el ADN?',
+        {
+            'a': '1951',
+            'b': '1952',
+            'c': '1953',
+        },
+        'c'
+    ),
+    new Question(
         '¿En qué país se desarrolló ARPANET?',
         {
             'a': 'Francia',
@@ -47,7 +56,7 @@ const questions = [
         'a'
     ),
     new Question(
-        '¿Cuál era la finalidad del primer mensaje enviado a travez de lo que hoy conocemos como  Internet?',
+        '¿Cuál era la finalidad del primer mensaje enviado a travez de lo que hoy conocemos como Internet?',
         {
             'a': 'Enviar un documento',
             'b': 'Iniciar sesión remotamente',
@@ -72,6 +81,15 @@ const questions = [
             'c': 'Ray Tomlinson'
         },
         'c'
+    ),
+    new Question(
+        '¿En qué fecha ARPANET adoptó oficialmente los protocolos TCP/IP, considerado el nacimiento del Internet moderno?',
+        {
+            'b': '1 de enero de 1983',
+            'c': '1 de enero de 1986',
+            'a': '1 de enero de 1989',
+        },
+        'a'
     ),
     new Question(
         '¿Quién creó la World Wide Web (WWW) en 1991?',
